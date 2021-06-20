@@ -10,6 +10,13 @@
                 <input type="datetime-local" name="do" class="form-control">
                 <br>
                 <br>
+                <input class="form-check-input" type="checkbox" name="original" id="original" aria-label="Checkbox for following text input">
+                <label for="original">Показать оригинальные enet</label>
+
+                <input class="form-check-input" type="checkbox" name="modify" id="modify" aria-label="Checkbox for following text input">
+                <label for="modify">Показать модифицированные enet</label>
+                <br>
+                <br>
                   <div class="form-group">
                   <button type="submit" class="btn btn-success">Показать</button>
                 </div>
