@@ -176,4 +176,30 @@ echo "<br>";
         return "DELETE success";
      }
 
+     public function mtsGet(Request $req)
+      {
+
+        $notif=DB::table('mts')->where([['date_time','>', strtotime($req->ot)],
+          ['date_time','<',strtotime($req->do)]])->get();
+
+     echo "Общее количество пришедших евентов = ";
+     echo count($notif);
+     echo "<br>";
+             foreach ($notif as $notif) {
+             echo '['.date("Y-m-d H:i:s",$notif->date_time).']';
+             echo "<br>";
+             echo $notif->data;
+             echo "<br>";
+             }
+      }
+
+      public function mtsDel(Request $req)
+       {
+
+         DB::table('mts')->where([['date_time','>', strtotime($req->otdel)],
+           ['date_time','<',strtotime($req->dodel)]])->delete();
+
+          return "DELETE success";
+       }
+
 }

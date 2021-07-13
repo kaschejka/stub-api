@@ -26,6 +26,12 @@ Route::get('/logConnector', function () {
     return view('logNotif');
 });
 
+Route::get('/mtslog', function () {
+    return view('mtslog');
+});
+
+
+
 Route::post('/result', [getLogController::class,'getLog']);
 
 
@@ -35,3 +41,7 @@ Route::post('/result_del', [getLogController::class,'delLog']);
 Route::post('/notifGet', [getLogController::class,'getLogConnector']);
 
 Route::post('/notifDel', [getLogController::class,'delLogConnector']);
+
+Route::post('/mtsGet', [getLogController::class,'mtsget']);
+
+Route::post('/mtsDel', [getLogController::class,'mtsdel']);
