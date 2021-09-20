@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redis;
 
 class getLogController extends Controller
 
@@ -153,27 +154,33 @@ public function delLog(Request $req)
    public function getLogConnector(Request $req)
     {
 
-      $notif=DB::table('notifConnector')->where([['date_time','>', strtotime($req->ot)],
-        ['date_time','<',strtotime($req->do)]])->get();
+$time_beetwen = []; 
 
-echo "Общее количество пришедших евентов = ";
-echo count($notif);
-echo "<br>";
-           foreach ($notif as $notif) {
-           echo '['.date("Y-m-d H:i:s",$notif->date_time).']';
-           echo "<br>";
-           echo $notif->data;
-           echo "<br>";
-           }
+
+
+$otv = Redis::command('MGET', range(strtotime($req->ot),strtotime($req->do)));
+$otv = array_filter($otv, fn($user) => $user != null);
+echo "Количество пришедших евентов - ".count($otv);
+echo '<br>';
+foreach ($otv  as $key => $value) {
+
+    echo  date("d.m.Y H:i:s", strtotime($req->ot)+$key);
+   echo '<br>';
+echo $value;
+echo '<br>';
+echo '-----------------';
+echo '<br>';
+}
+
+
     }
 
     public function delLogConnector(Request $req)
      {
 
-       DB::table('notifConnector')->where([['date_time','>', strtotime($req->otdel)],
-         ['date_time','<',strtotime($req->dodel)]])->delete();
+$k =  Redis::command('DEL', range(strtotime($req->otdel),strtotime($req->dodel)));       
 
-        return "DELETE success";
+        return "DELETE success - ".$k.' элементов';
      }
 
      public function mtsGet(Request $req)

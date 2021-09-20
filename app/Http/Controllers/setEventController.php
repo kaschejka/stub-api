@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\notifications;
 use App\Models\notifConnector;
 use App\Models\mts;
+use Illuminate\Support\Facades\Redis;
+
 
 class setEventController extends Controller
 {
@@ -31,6 +33,7 @@ return $req;
 $item->data = $req;
  $item->date_time = time();
  $item->save();
+Redis::set(time(), $req);
 return $req;
 
     }
