@@ -13,7 +13,7 @@ class getLogController extends Controller
 public function eventModify($event)
 {
   $temp = json_decode(strstr($event,'{'));
-
+$result = [];
 
     if (isset($temp->event) && isset($temp->event->type)) {
          if ($temp->event->type == 'o' || $temp->event->type == 's' || $temp->event->type == 'h'  || $temp->event->type == 't') {
@@ -93,6 +93,11 @@ public function eventModify($event)
            } else {
              $result['client_id'] = 'PARAMETR IS MISSING!';
            }
+           if (isset($temp->extension)) {
+             $result['extension'] = $temp->extension;
+           } else {
+             $result['extension'] = 'PARAMETR IS MISSING!';
+           }
          }
        }
      else {
@@ -154,7 +159,7 @@ public function delLog(Request $req)
    public function getLogConnector(Request $req)
     {
 
-$time_beetwen = []; 
+$time_beetwen = [];
 
 
 
@@ -178,7 +183,7 @@ echo '<br>';
     public function delLogConnector(Request $req)
      {
 
-$k =  Redis::command('DEL', range(strtotime($req->otdel),strtotime($req->dodel)));       
+$k =  Redis::command('DEL', range(strtotime($req->otdel),strtotime($req->dodel)));
 
         return "DELETE success - ".$k.' элементов';
      }
