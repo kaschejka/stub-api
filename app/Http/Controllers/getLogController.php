@@ -57,6 +57,11 @@ $result = [];
            } else {
              $result['client_id'] = 'PARAMETR IS MISSING!';
            }
+           if (isset($temp->extension)) {
+             $result['extension'] = $temp->extension;
+           } else {
+             $result['extension'] = 'PARAMETR IS MISSING!';
+           }
          } elseif ($temp->event->type == 'sp' || $temp->event->type == 'ep') {
            if (isset($temp->date_time)) {
              $result['date_time'] = $temp->date_time;
@@ -98,6 +103,9 @@ $result = [];
            } else {
              $result['extension'] = 'PARAMETR IS MISSING!';
            }
+         } else {
+           $result['ERROR'] = 'UNRECOGNIZENT EVENT. New Type event!';
+           $result['event'] = strstr($event,'{');
          }
        }
      else {
